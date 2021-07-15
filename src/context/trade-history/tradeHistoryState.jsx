@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import TradeHistoryContext from "./tradeHistoryContext";
 
 const TradeHistoryState = (props) => {
-  const [intraDayTradeHistoryList, setintraDayTradeHistoryList] = useState({});
+  const [intraDayTradeHistoryList, setintraDayTradeHistoryList] = useState([]);
 
   useEffect(() => {
     getTradeHistory();
   }, []);
 
   const getTradeHistory = async () => {
-    const response = await fetch(
-      "https://seffaflik.epias.com.tr/transparency/service/market/intra-day-trade-history?endDate=2020-02-26&startDate=2020-02-25"
-    );
+    const response = await fetch("http://localhost:8000/body");
+
     const json = await response.json();
-    setintraDayTradeHistoryList(json);
+    setintraDayTradeHistoryList(json.intraDayTradeHistoryList);
   };
   return (
     <TradeHistoryContext.Provider
