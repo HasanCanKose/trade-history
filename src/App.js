@@ -3,16 +3,19 @@ import "./App.css";
 import Navbar from "./components/layout/navbar/Navbar";
 import Charts from "./components/pages/charts/Charts";
 import Home from "./components/pages/home/Home";
+import TradeHistoryState from "./context/trade-history/tradeHistoryState";
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/charts" component={Charts} />
-      </Switch>
-    </Router>
+    <TradeHistoryState>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/charts" component={Charts} />
+        </Switch>
+      </Router>
+    </TradeHistoryState>
   );
 };
 
