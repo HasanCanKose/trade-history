@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import TradeHistoryContext from "../../../context/trade-history/tradeHistoryContext";
-
+import TableItem from "./TableItem";
+import "./Home.css";
 const Home = () => {
   const { intraDayTradeHistoryList } = useContext(TradeHistoryContext);
   const [conract, setConract] = useState([]);
@@ -46,12 +47,17 @@ const Home = () => {
         { quantity: 0, price: 0 }
       );
 
-      const agirlikliOrt =
+      const weightedAveragePrice =
         group.reduce((acc, curr) => {
           return acc + curr.price * curr.quantity;
         }, 0) / quantity;
 
-      return { conract: group[0].conract, quantity, price, agirlikliOrt };
+      return {
+        conract: group[0].conract,
+        quantity,
+        price,
+        weightedAveragePrice,
+      };
     });
 
     setConract(total);
@@ -60,9 +66,26 @@ const Home = () => {
 
   return (
     <div>
-      {intraDayTradeHistoryList.map((x) => (
-        <p key={x.id}>{x.conract}</p>
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Tarih</th>
+            <th>Toplam Miktar</th>
+            <th>Toplam Fiyat</th>
+            <th>Ağırlıklı Ortalama Fiyat</th>
+          </tr>
+        </thead>
+        <tbody>
+          {conract.map((asd, index) => (
+            <TableItem
+              key={index}
+              totalPrice={asd.price}
+              totalQuantity={asd.quantity}
+              weightedAveragePrice={asd.weightedAveragePrice}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
