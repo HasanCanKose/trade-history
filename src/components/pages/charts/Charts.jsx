@@ -1,5 +1,11 @@
+import BarChart from "../../chart/BarChart";
+
 const Charts = () => {
-  return <div>Charts</div>;
+  return (
+    <div>
+      <BarChart />
+    </div>
+  );
 };
 
 export default Charts;
