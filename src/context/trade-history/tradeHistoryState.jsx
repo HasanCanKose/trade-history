@@ -8,6 +8,7 @@ import { getSortedValues } from "../../util/getSortedValues";
 const TradeHistoryState = (props) => {
   const [conract, setConract] = useState([]);
   const [dates, setDates] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getTradeHistory();
@@ -39,6 +40,7 @@ const TradeHistoryState = (props) => {
 
     setConract(totalValues);
     setDates(dates);
+    setLoading(false);
   };
 
   return (
@@ -46,6 +48,7 @@ const TradeHistoryState = (props) => {
       value={{
         conract,
         dates,
+        loading,
       }}
     >
       {props.children}
