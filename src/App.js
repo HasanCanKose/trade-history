@@ -8,7 +8,7 @@ import TradeHistoryState from "./context/trade-history/tradeHistoryState";
 const App = () => {
   return (
     <TradeHistoryState>
-      <Router>
+      <Router basename="/trade-history">
         <Navbar />
         <div className="container">
           <Switch>
