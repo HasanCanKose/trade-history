@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import TradeHistoryContext from "../../../context/trade-history/tradeHistoryContext";
 import BarChart from "../../chart/BarChart";
+import "./Charts.css";
 
 const Charts = () => {
   const { conract, dates } = useContext(TradeHistoryContext);
   return (
-    <div>
+    <div className="chart-wrapper">
       <div>
-        <h2>Toplam Miktar</h2>
         <BarChart
           dates={dates}
           values={conract.map((value) => value.quantity)}
@@ -17,7 +17,6 @@ const Charts = () => {
         />
       </div>
       <div>
-        <h2>Toplam Fiyat</h2>
         <BarChart
           dates={dates}
           values={conract.map((value) => value.price)}
@@ -28,7 +27,6 @@ const Charts = () => {
       </div>
 
       <div>
-        <h2>Ağırlıklı Ortalama Fiyat</h2>
         <BarChart
           dates={dates}
           values={conract.map((value) => value.weightedAveragePrice)}
