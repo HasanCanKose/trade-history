@@ -1,68 +1,32 @@
 import { useState, useEffect } from "react";
 import TradeHistoryContext from "./tradeHistoryContext";
+import { getGroups } from "../../util/getGoups";
+import { getTotalValues } from "../../util/getTotalValues";
+import { getDate } from "../../util/getDate";
+import { getSortedValues } from "../../util/getSortedValues";
 
 const TradeHistoryState = (props) => {
   const [conract, setConract] = useState([]);
   const [dates, setDates] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getTradeHistory();
+    // eslint-disable-next-line
   }, []);
 
   const getTradeHistory = async () => {
-    const response = await fetch("http://localhost:8000/body");
-
+    const response = await fetch(
+      "/transparency/service/market/intra-day-trade-history?endDate=2020-02-26&startDate=2020-02-25"
+    );
     const json = await response.json();
-    calculateTotalValues(json.intraDayTradeHistoryList);
+    calculateTotalValues(json.body.intraDayTradeHistoryList);
   };
 
   const calculateTotalValues = (intraDayTradeHistoryList) => {
-    const groups = intraDayTradeHistoryList.reduce((acc, curr) => {
-      if (curr.conract.includes("PH")) {
-        const tradeHistoryList = acc.find((items) =>
-          items.some((item) => item.conract === curr.conract)
-        );
-        const conract = curr.conract;
-        const price = (curr.price * curr.quantity) / 10;
-        const quantity = curr.quantity / 10;
-        if (tradeHistoryList) {
-          tradeHistoryList.push({ conract, price, quantity });
-        } else {
-          acc.push([
-            {
-              conract,
-              price,
-              quantity,
-            },
-          ]);
-        }
-      }
-      return acc;
-    }, []);
+    const groups = getGroups(intraDayTradeHistoryList);
 
-    const totalValues = groups.map((group) => {
-      const { quantity, price } = group.reduce(
-        (acc, curr) => {
-          return {
-            quantity: acc.quantity + curr.quantity,
-            price: acc.price + curr.price,
-          };
-        },
-        { quantity: 0, price: 0 }
-      );
-
-      const weightedAveragePrice =
-        group.reduce((acc, curr) => {
-          return acc + curr.price * curr.quantity;
-        }, 0) / quantity;
-
-      return {
-        conract: group[0].conract,
-        quantity,
-        price,
-        weightedAveragePrice,
-      };
-    });
+    const totalValues = getTotalValues(groups);
 
     const conracts = totalValues.map((value) => {
       return value.conract;
@@ -72,18 +36,11 @@ const TradeHistoryState = (props) => {
       return getDate(conract);
     });
 
-    const sortedTotalValues = totalValues.sort(function (firstEl, secondEl) {
-      return ("" + firstEl.conract).localeCompare(secondEl.conract);
-    });
+    getSortedValues(totalValues, dates);
 
-    setConract(sortedTotalValues);
+    setConract(totalValues);
     setDates(dates);
-  };
-
-  const getDate = (conract) => {
-    const dateString = conract.slice(2);
-    const [year, month, day, hour] = dateString.match(/.{1,2}/g);
-    return `20${year}.${month}.${day} - ${hour}.00`;
+    setLoading(false);
   };
 
   return (
@@ -91,6 +48,7 @@ const TradeHistoryState = (props) => {
       value={{
         conract,
         dates,
+        loading,
       }}
     >
       {props.children}

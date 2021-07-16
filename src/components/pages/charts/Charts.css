@@ -1,0 +1,4 @@
+.chart-wrapper {
+  display: grid;
+  grid-gap: 40px;
+}
