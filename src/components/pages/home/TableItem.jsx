@@ -8,8 +8,8 @@ const TableItem = ({
     <>
       <tr>
         <td>{date}</td>
-        <td>{totalPrice}</td>
         <td>{totalQuantity}</td>
+        <td>{totalPrice}</td>
         <td>{weightedAveragePrice}</td>
       </tr>
     </>

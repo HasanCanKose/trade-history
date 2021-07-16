@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import TradeHistoryContext from "../../../context/trade-history/tradeHistoryContext";
 import TableItem from "./TableItem";
 import "./Home.css";
