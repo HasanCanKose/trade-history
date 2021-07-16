@@ -15,10 +15,11 @@ const TradeHistoryState = (props) => {
   }, []);
 
   const getTradeHistory = async () => {
-    const response = await fetch("http://localhost:8000/body");
-
+    const response = await fetch(
+      "/transparency/service/market/intra-day-trade-history?endDate=2020-02-26&startDate=2020-02-25"
+    );
     const json = await response.json();
-    calculateTotalValues(json.intraDayTradeHistoryList);
+    calculateTotalValues(json.body.intraDayTradeHistoryList);
   };
 
   const calculateTotalValues = (intraDayTradeHistoryList) => {
