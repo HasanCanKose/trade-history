@@ -6,7 +6,7 @@ import { getDate } from "../../util/getDate";
 import { getSortedValues } from "../../util/getSortedValues";
 
 const TradeHistoryState = (props) => {
-  const [conract, setConract] = useState([]);
+  const [totalValues, setTotalValues] = useState([]);
   const [dates, setDates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +38,7 @@ const TradeHistoryState = (props) => {
 
     getSortedValues(totalValues, dates);
 
-    setConract(totalValues);
+    setTotalValues(totalValues);
     setDates(dates);
     setLoading(false);
   };
@@ -46,7 +46,7 @@ const TradeHistoryState = (props) => {
   return (
     <TradeHistoryContext.Provider
       value={{
-        conract,
+        totalValues,
         dates,
         loading,
       }}

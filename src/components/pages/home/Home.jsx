@@ -4,7 +4,7 @@ import TableItem from "./TableItem";
 import "./Home.css";
 import Spinner from "../../layout/Spinner";
 const Home = () => {
-  const { conract, dates, loading } = useContext(TradeHistoryContext);
+  const { totalValues, dates, loading } = useContext(TradeHistoryContext);
 
   return (
     <div>
@@ -21,13 +21,13 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {conract.map((asd, index) => (
+            {totalValues.map((value, index) => (
               <TableItem
                 key={index}
                 date={dates[index]}
-                totalPrice={asd.price}
-                totalQuantity={asd.quantity}
-                weightedAveragePrice={asd.weightedAveragePrice}
+                totalPrice={value.price}
+                totalQuantity={value.quantity}
+                weightedAveragePrice={value.weightedAveragePrice}
               />
             ))}
           </tbody>
