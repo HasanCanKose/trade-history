@@ -11,6 +11,7 @@ const TradeHistoryState = (props) => {
 
   useEffect(() => {
     getTradeHistory();
+    // eslint-disable-next-line
   }, []);
 
   const getTradeHistory = async () => {
