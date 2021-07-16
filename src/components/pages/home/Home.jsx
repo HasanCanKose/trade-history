@@ -3,7 +3,7 @@ import TradeHistoryContext from "../../../context/trade-history/tradeHistoryCont
 import TableItem from "./TableItem";
 import "./Home.css";
 const Home = () => {
-  const { conract } = useContext(TradeHistoryContext);
+  const { conract, dates } = useContext(TradeHistoryContext);
 
   return (
     <div>
@@ -20,6 +20,7 @@ const Home = () => {
           {conract.map((asd, index) => (
             <TableItem
               key={index}
+              date={dates[index]}
               totalPrice={asd.price}
               totalQuantity={asd.quantity}
               weightedAveragePrice={asd.weightedAveragePrice}
