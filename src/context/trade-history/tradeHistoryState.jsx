@@ -3,6 +3,7 @@ import TradeHistoryContext from "./tradeHistoryContext";
 
 const TradeHistoryState = (props) => {
   const [conract, setConract] = useState([]);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     getTradeHistory();
@@ -63,14 +64,38 @@ const TradeHistoryState = (props) => {
       };
     });
 
-    setConract(totalValues);
-    console.log(totalValues);
+    const conracts = totalValues.map((value) => {
+      return value.conract;
+    });
+
+    const dates = conracts.map((conract) => {
+      return getDate(conract);
+    });
+
+    const sortedTotalValues = totalValues.sort(function (firstEl, secondEl) {
+      return ("" + firstEl.conract).localeCompare(secondEl.conract);
+    });
+
+    // const sortedDates = dates.sort(function (firstEl, secondEl) {
+    //   return ("" + firstEl).localeCompare(secondEl);
+    // });
+    setConract(sortedTotalValues);
+    setDates(dates);
+    console.log(sortedTotalValues);
+    console.log(dates);
+  };
+
+  const getDate = (conract) => {
+    const dateString = conract.slice(2);
+    const [year, month, day, hour] = dateString.match(/.{1,2}/g);
+    return `20${year}.${month}.${day} - ${hour}.00`;
   };
 
   return (
     <TradeHistoryContext.Provider
       value={{
         conract,
+        dates,
       }}
     >
       {props.children}
