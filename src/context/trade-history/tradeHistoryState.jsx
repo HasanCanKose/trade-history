@@ -76,13 +76,8 @@ const TradeHistoryState = (props) => {
       return ("" + firstEl.conract).localeCompare(secondEl.conract);
     });
 
-    // const sortedDates = dates.sort(function (firstEl, secondEl) {
-    //   return ("" + firstEl).localeCompare(secondEl);
-    // });
     setConract(sortedTotalValues);
     setDates(dates);
-    console.log(sortedTotalValues);
-    console.log(dates);
   };
 
   const getDate = (conract) => {
